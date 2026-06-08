@@ -52,6 +52,7 @@ from modules import (
     WebAppScanning,
     Exploitation,
     Forensics,
+    CloudSecurity,
 )
 
 
@@ -84,6 +85,7 @@ class ZelzalTUI:
         self.webapp = WebAppScanning()
         self.exploitation = Exploitation()
         self.forensics = Forensics()
+        self.cloud = CloudSecurity()
         self.system_info = get_system_info()
         self.running = True
 
@@ -127,6 +129,7 @@ class ZelzalTUI:
                 ("B", "Web App Scanning", "Nikto, wpscan, gobuster, sqlmap, dirb"),
                 ("C", "Exploitation", "Hydra, john, metasploit, crackmapexec, bettercap"),
                 ("D", "Forensics", "Volatility, binwalk, foremost, steghide, exiftool"),
+                ("E", "Cloud Security", "AWS, Azure, GCP, Prowler, ScoutSuite"),
                 ("Q", "Quick Scan", "Run all modules in quick-assessment mode"),
                 ("F", "Full Report", "Generate comprehensive security report"),
                 ("T", "Tools", "Password generator, file encrypt/decrypt, config"),
@@ -143,8 +146,9 @@ class ZelzalTUI:
             print("7. Container Security    8. Wireless Security")
             print("9. Exploit Detection     A. Reconnaissance")
             print("B. Web App Scanning      C. Exploitation")
-            print("D. Forensics             Q. Quick Scan")
-            print("F. Full Report           T. Tools")
+            print("D. Forensics             E. Cloud Security")
+            print("Q. Quick Scan            F. Full Report")
+            print("T. Tools")
             print("0. Exit")
 
     def run(self):
@@ -181,6 +185,8 @@ class ZelzalTUI:
                 "c": self.menu_exploitation,
                 "D": self.menu_forensics,
                 "d": self.menu_forensics,
+                "E": self.menu_cloud,
+                "e": self.menu_cloud,
                 "Q": self.quick_scan,
                 "q": self.quick_scan,
                 "F": self.full_report,
@@ -632,6 +638,27 @@ class ZelzalTUI:
             Prompt.ask("\nPress Enter to continue")
         self._show_module_menu("Forensics", actions, handler)
 
+    def menu_cloud(self):
+        actions = [
+            ("1", "AWS Audit", "Check IAM, S3, Security Groups, MFA"),
+            ("2", "Azure Audit", "Check subscriptions, RBAC roles"),
+            ("3", "GCP Audit", "Check projects, IAM policies"),
+            ("4", "Full Assessment", "Run all cloud security checks"),
+        ]
+        def handler(choice):
+            if choice == "1":
+                self._show_result(self.cloud.aws_audit())
+            elif choice == "2":
+                self._show_result(self.cloud.azure_audit())
+            elif choice == "3":
+                self._show_result(self.cloud.gcp_audit())
+            elif choice == "4":
+                self._show_result(self.cloud.full_assessment())
+            else:
+                return
+            Prompt.ask("\nPress Enter to continue")
+        self._show_module_menu("Cloud Security", actions, handler)
+
     # ─── Tools Menu ───
     def menu_tools(self):
         if HAS_RICH:
@@ -764,6 +791,7 @@ class ZelzalTUI:
                 ("Web App Scanning", "webapp", lambda: self.webapp.full_assessment()),
                 ("Exploitation", "exploitation", lambda: self.exploitation.full_assessment()),
                 ("Forensics", "forensics", lambda: self.forensics.full_assessment()),
+                ("Cloud Security", "cloud", lambda: self.cloud.full_assessment()),
             ]
             for desc, key, func in modules:
                 task_id = progress.add_task(desc, total=1)

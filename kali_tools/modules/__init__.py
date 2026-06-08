@@ -16,6 +16,7 @@ from .reconnaissance import Reconnaissance
 from .web_app_scanning import WebAppScanning
 from .exploitation import Exploitation
 from .forensics import Forensics
+from .cloud_security import CloudSecurity
 
 __all__ = [
     "NetworkProtection",
@@ -31,4 +32,5 @@ __all__ = [
     "WebAppScanning",
     "Exploitation",
     "Forensics",
+    "CloudSecurity",
 ]
