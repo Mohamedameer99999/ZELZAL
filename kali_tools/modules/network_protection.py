@@ -3,6 +3,7 @@ ZELZAL Network Protection Module v5.0
 Real implementations using Kali Linux tools: nmap, scapy, iptables, aircrack-ng
 """
 
+import os
 import ipaddress
 import socket
 import subprocess
