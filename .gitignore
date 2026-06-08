@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+*.spec
+*.db
+
+# Virtual environment
+venv/
+.venv/
+env/
+.env/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/node_modules/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env.local
+.env.production
+
+# Logs
+*.log
+kali_tools/logs/
+
+# Reports
+kali_tools/reports/
+
+# Config
+kali_tools/config/settings.json
+
+# Flask
+instance/
+
+# Zip
+*.zip
+
+# Environment variables
+.env

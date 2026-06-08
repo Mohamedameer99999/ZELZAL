@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --neon-green: #00ff41;
+  --neon-dark: #003b00;
+  --cyber-black: #0a0a0a;
+  --cyber-dark: #0d1117;
+  --cyber-gray: #161b22;
+  --cyber-light: #21262d;
+  --cyber-border: #30363d;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Courier New', Consolas, monospace;
+  background-color: var(--cyber-black);
+  color: #c9d1d9;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+[dir="rtl"] body,
+[dir="rtl"] {
+  font-family: 'Cairo', 'Courier New', Consolas, monospace;
+}
+
+[dir="rtl"] .ml-auto { margin-left: 0; margin-right: auto; }
+[dir="rtl"] .mr-auto { margin-right: 0; margin-left: auto; }
+[dir="rtl"] .mr-2 { margin-right: 0; margin-left: 0.5rem; }
+[dir="rtl"] .ml-2 { margin-left: 0; margin-right: 0.5rem; }
+[dir="rtl"] .mr-3 { margin-right: 0; margin-left: 0.75rem; }
+[dir="rtl"] .ml-3 { margin-left: 0; margin-right: 0.75rem; }
+[dir="rtl"] .space-x-2 > :not([hidden]) ~ :not([hidden]) { --tw-space-x-reverse: 1; }
+[dir="rtl"] .space-x-3 > :not([hidden]) ~ :not([hidden]) { --tw-space-x-reverse: 1; }
+[dir="rtl"] .space-x-4 > :not([hidden]) ~ :not([hidden]) { --tw-space-x-reverse: 1; }
+[dir="rtl"] .left-0 { left: auto; right: 0; }
+[dir="rtl"] .right-0 { right: auto; left: 0; }
+[dir="rtl"] .right-4 { right: auto; left: 1rem; }
+[dir="rtl"] .left-4 { left: auto; right: 1rem; }
+[dir="rtl"] .text-left { text-align: right; }
+[dir="rtl"] .text-right { text-align: left; }
+[dir="rtl"] .justify-start { justify-content: flex-end; }
+[dir="rtl"] .justify-end { justify-content: flex-start; }
+[dir="rtl"] .border-l { border-left: none; border-right: 1px solid; }
+[dir="rtl"] .border-r { border-right: none; border-left: 1px solid; }
+[dir="rtl"] .translate-x-0 { transform: translateX(0); }
+[dir="rtl"] .-translate-x-full { transform: translateX(100%); }
+[dir="rtl"] .translate-x-full { transform: translateX(-100%); }
+[dir="rtl"] .origin-left { transform-origin: right; }
+[dir="rtl"] .origin-right { transform-origin: left; }
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cyber-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neon-green);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00cc33;
+}
+
+::selection {
+  background: var(--neon-green);
+  color: var(--cyber-black);
+}
+
+@layer components {
+  .glass {
+    background: rgba(13, 17, 23, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 255, 65, 0.15);
+    box-shadow: 0 8px 32px 0 rgba(0, 255, 65, 0.08);
+  }
+
+  .glass-hover:hover {
+    border-color: rgba(0, 255, 65, 0.4);
+    box-shadow: 0 8px 32px 0 rgba(0, 255, 65, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .neon-text {
+    color: var(--neon-green);
+    text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
+  }
+
+  .neon-border {
+    border: 1px solid var(--neon-green);
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.3), inset 0 0 10px rgba(0, 255, 65, 0.1);
+  }
+
+  .cyber-input {
+    background: rgba(13, 17, 23, 0.8);
+    border: 1px solid var(--cyber-border);
+    color: var(--neon-green);
+    outline: none;
+    transition: all 0.3s ease;
+  }
+
+  .cyber-input:focus {
+    border-color: var(--neon-green);
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+  }
+
+  .cyber-btn {
+    background: linear-gradient(135deg, var(--neon-dark), #005a1a);
+    border: 1px solid var(--neon-green);
+    color: var(--neon-green);
+    text-shadow: 0 0 5px var(--neon-green);
+    transition: all 0.3s ease;
+  }
+
+  .cyber-btn:hover {
+    background: linear-gradient(135deg, #005a1a, var(--neon-green));
+    color: var(--cyber-black);
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+  }
+
+  .scan-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+    opacity: 0.3;
+    animation: scan 3s linear infinite;
+  }
+}
+
+@keyframes scan {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}
+
+@keyframes matrix-fall {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+.animate-matrix {
+  animation: matrix-fall var(--duration) linear infinite;
+  animation-delay: var(--delay);
+}
