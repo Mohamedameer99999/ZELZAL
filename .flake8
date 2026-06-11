@@ -1,0 +1,24 @@
+[flake8]
+max-line-length = 200
+exclude =
+    __pycache__,
+    .git,
+    .github,
+    node_modules,
+    __init__.py,
+    core.py,
+    firewall_advanced.py,
+    identity_protection.py,
+    network_protection.py,
+    performance_protection.py,
+    system_protection.py,
+    web_protection.py
+extend-ignore =
+    E741,
+    E701,
+    W391,
+    E303,
+    E128,
+    E127,
+    E306,
+    F541,

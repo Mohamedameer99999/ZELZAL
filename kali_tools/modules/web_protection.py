@@ -5,10 +5,10 @@ Real implementations using: requests, dnspython, whois, sslyze, curl
 
 import re
 import os
-import socket
 import json
 import subprocess
 from datetime import datetime
+from urllib.parse import urlparse
 from typing import Dict, List, Optional, Any
 
 from core import write_log, run_command, save_report, check_dependencies
@@ -167,10 +167,7 @@ class WebProtection:
         write_log("Scanning for data leaks", "INFO")
         result = {"timestamp": datetime.now().isoformat(), "leaks_found": 0, "breaches": []}
         try:
-            import requests
-            # Use Have I Been Pwned API (v3)
             if email:
-                headers = {"hibp-api-key": ""}  # User needs to provide API key
                 code, stdout, _ = run_command(["curl", "-s",
                     f"https://haveibeenpwned.com/api/v3/breachedaccount/{email}"])
                 if code == 0 and stdout and stdout != "[]":

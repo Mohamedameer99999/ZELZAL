@@ -4,9 +4,8 @@ Real implementations using: psutil, clamav, lynis, chkrootkit, rkhunter
 """
 
 import os
-import sys
 from datetime import datetime
-from typing import Dict, List, Optional, Any
+from typing import Dict, Optional, Any
 
 from core import write_log, run_command, save_report, is_root, check_dependencies
 
@@ -81,7 +80,6 @@ class SystemProtection:
             timeout = 120 if quick else 600
             code, stdout, stderr = run_command(args, timeout=timeout)
             if code in (0, 1):
-                threat_lines = []
                 for line in stdout.split("\n"):
                     if "FOUND" in line:
                         result["infected"] += 1

@@ -4,7 +4,6 @@ Enhanced core with logging, encryption, configuration, and utility functions
 """
 
 import os
-import sys
 import json
 import base64
 import hashlib

@@ -5,13 +5,13 @@ strings, outguess, snow, stegsolve, zsteg
 """
 import os
 import json
-import subprocess
 from datetime import datetime
-from typing import Dict, List, Optional, Any
+from typing import Dict, Any
 
-from core import write_log, run_command, save_report, check_dependencies, is_root
+from core import run_command, save_report, check_dependencies
 
 MODULE_NAME = "forensics"
+
 
 class Forensics:
     def __init__(self):

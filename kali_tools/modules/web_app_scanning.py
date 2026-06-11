@@ -3,14 +3,13 @@ ZELZAL Web Application Scanning Module v5.0
 Real tools: nikto, wpscan, gobuster, sqlmap, dirb, joomscan, droopescan, whatweb
 """
 import os
-import json
-import subprocess
 from datetime import datetime
-from typing import Dict, List, Optional, Any
+from typing import Dict, Any
 
-from core import write_log, run_command, save_report, check_dependencies, is_root
+from core import run_command, save_report, check_dependencies
 
 MODULE_NAME = "web_app_scanning"
+
 
 class WebAppScanning:
     def __init__(self):

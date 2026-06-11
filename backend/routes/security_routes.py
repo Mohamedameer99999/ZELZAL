@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required
 from database import db
-from models import SecurityEvent, Activity
+from models import SecurityEvent
 from datetime import datetime, timedelta, timezone
 
 security_bp = Blueprint('security', __name__, url_prefix='/api/security')

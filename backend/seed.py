@@ -8,46 +8,90 @@ import random
 now = datetime.now(timezone.utc)
 
 users_data = [
-    {'username': 'admin', 'email': 'admin@zelzal.io', 'password': 'admin123', 'role': 'admin', 'bio': 'System administrator and security architect'},
-    {'username': 'cyber_agent', 'email': 'agent@zelzal.io', 'password': 'agent123', 'role': 'analyst', 'bio': 'Senior security analyst'},
-    {'username': 'netwatch', 'email': 'watch@zelzal.io', 'password': 'watch123', 'role': 'user', 'bio': 'Network security engineer'},
-    {'username': 'shadowsilk', 'email': 'shadow@zelzal.io', 'password': 'shadow123', 'role': 'viewer', 'bio': 'External security auditor'},
-    {'username': 'firewall_fox', 'email': 'fox@zelzal.io', 'password': 'fox123', 'role': 'user', 'bio': 'Penetration testing specialist'},
-    {'username': 'zeroday', 'email': 'zero@zelzal.io', 'password': 'zero123', 'role': 'analyst', 'bio': 'Vulnerability researcher'},
-    {'username': 'cipher_ghost', 'email': 'ghost@zelzal.io', 'password': 'ghost123', 'role': 'user', 'bio': 'Cryptography engineer'},
-    {'username': 'darktrace', 'email': 'trace@zelzal.io', 'password': 'trace123', 'role': 'user', 'bio': 'Threat intelligence analyst'},
+    {'username': 'admin', 'email': 'admin@zelzal.io', 'password': 'admin123',
+     'role': 'admin', 'bio': 'System administrator and security architect'},
+    {'username': 'cyber_agent', 'email': 'agent@zelzal.io', 'password': 'agent123',
+     'role': 'analyst', 'bio': 'Senior security analyst'},
+    {'username': 'netwatch', 'email': 'watch@zelzal.io', 'password': 'watch123',
+     'role': 'user', 'bio': 'Network security engineer'},
+    {'username': 'shadowsilk', 'email': 'shadow@zelzal.io', 'password': 'shadow123',
+     'role': 'viewer', 'bio': 'External security auditor'},
+    {'username': 'firewall_fox', 'email': 'fox@zelzal.io', 'password': 'fox123',
+     'role': 'user', 'bio': 'Penetration testing specialist'},
+    {'username': 'zeroday', 'email': 'zero@zelzal.io', 'password': 'zero123',
+     'role': 'analyst', 'bio': 'Vulnerability researcher'},
+    {'username': 'cipher_ghost', 'email': 'ghost@zelzal.io', 'password': 'ghost123',
+     'role': 'user', 'bio': 'Cryptography engineer'},
+    {'username': 'darktrace', 'email': 'trace@zelzal.io', 'password': 'trace123',
+     'role': 'user', 'bio': 'Threat intelligence analyst'},
 ]
 
-event_types = ['Brute Force Attack', 'Malware Detected', 'Unauthorized Access', 'Port Scan',
-               'DNS Spoofing', 'SQL Injection', 'Phishing Attempt', 'DDoS Attack',
-               'Man-in-the-Middle', 'Ransomware Detection', 'Zero-Day Exploit', 'Credential Stuffing']
+event_types = [
+    'Brute Force Attack', 'Malware Detected', 'Unauthorized Access', 'Port Scan',
+    'DNS Spoofing', 'SQL Injection', 'Phishing Attempt', 'DDoS Attack',
+    'Man-in-the-Middle', 'Ransomware Detection', 'Zero-Day Exploit', 'Credential Stuffing',
+]
 
 severities = ['critical', 'high', 'medium', 'low']
 statuses = ['active', 'investigating', 'resolved']
 
-ips = ['192.168.1.105', '10.0.0.45', '203.0.113.50', '198.51.100.22', '192.0.2.77',
-       '203.0.113.88', '172.16.0.33', '10.88.12.7', '192.168.45.120', '185.220.101.23']
+ips = [
+    '192.168.1.105', '10.0.0.45', '203.0.113.50', '198.51.100.22', '192.0.2.77',
+    '203.0.113.88', '172.16.0.33', '10.88.12.7', '192.168.45.120', '185.220.101.23',
+]
 
 project_templates = [
-    {'name': 'Firewall Configuration', 'desc': 'Configure and deploy new firewall rules across all network segments', 'priority': 'high'},
-    {'name': 'Penetration Testing', 'desc': 'Comprehensive security assessment of internal systems and infrastructure', 'priority': 'high'},
-    {'name': 'Security Audit Q2', 'desc': 'Quarterly security audit and compliance check for all departments', 'priority': 'medium'},
-    {'name': 'Incident Response Plan', 'desc': 'Develop and document incident response procedures and playbooks', 'priority': 'medium'},
-    {'name': 'Network Monitoring Setup', 'desc': 'Deploy network monitoring agents across critical infrastructure', 'priority': 'low'},
-    {'name': 'Vulnerability Assessment', 'desc': 'Scan and assess all internal and external systems for vulnerabilities', 'priority': 'high'},
-    {'name': 'SIEM Implementation', 'desc': 'Deploy and configure Security Information and Event Management system', 'priority': 'medium'},
-    {'name': 'Endpoint Protection', 'desc': 'Deploy next-gen endpoint protection across all workstations and servers', 'priority': 'high'},
+    {'name': 'Firewall Configuration',
+     'desc': 'Configure and deploy new firewall rules across all network segments',
+     'priority': 'high'},
+    {'name': 'Penetration Testing',
+     'desc': 'Comprehensive security assessment of internal systems and infrastructure',
+     'priority': 'high'},
+    {'name': 'Security Audit Q2',
+     'desc': 'Quarterly security audit and compliance check for all departments',
+     'priority': 'medium'},
+    {'name': 'Incident Response Plan',
+     'desc': 'Develop and document incident response procedures and playbooks',
+     'priority': 'medium'},
+    {'name': 'Network Monitoring Setup',
+     'desc': 'Deploy network monitoring agents across critical infrastructure',
+     'priority': 'low'},
+    {'name': 'Vulnerability Assessment',
+     'desc': 'Scan and assess all internal and external systems for vulnerabilities',
+     'priority': 'high'},
+    {'name': 'SIEM Implementation',
+     'desc': 'Deploy and configure Security Information and Event Management system',
+     'priority': 'medium'},
+    {'name': 'Endpoint Protection',
+     'desc': 'Deploy next-gen endpoint protection across all workstations and servers',
+     'priority': 'high'},
 ]
 
 task_templates = {
-    'Firewall Configuration': ['Define rule sets', 'Test rule conflicts', 'Deploy to production', 'Verify deployment', 'Document changes'],
-    'Penetration Testing': ['Reconnaissance phase', 'Vulnerability scanning', 'Exploitation testing', 'Report generation', 'Remediation plan'],
-    'Security Audit Q2': ['Gather access logs', 'Review permissions', 'Check compliance', 'Generate audit report', 'Present findings'],
-    'Incident Response Plan': ['Draft procedures', 'Review with team', 'Simulation testing', 'Finalize documentation', 'Train staff'],
-    'Network Monitoring Setup': ['Select monitoring tools', 'Deploy agents', 'Configure alerts', 'Test monitoring', 'Dashboard setup'],
-    'Vulnerability Assessment': ['Scope definition', 'Run scans', 'Analyze results', 'Prioritize findings', 'Create remediation plan'],
-    'SIEM Implementation': ['Requirements gathering', 'Install SIEM', 'Configure log sources', 'Create correlation rules', 'Dashboard creation'],
-    'Endpoint Protection': ['Vendor evaluation', 'Deploy agents', 'Configure policies', 'Test detection', 'Monitor performance'],
+    'Firewall Configuration':
+        ['Define rule sets', 'Test rule conflicts', 'Deploy to production',
+         'Verify deployment', 'Document changes'],
+    'Penetration Testing':
+        ['Reconnaissance phase', 'Vulnerability scanning', 'Exploitation testing',
+         'Report generation', 'Remediation plan'],
+    'Security Audit Q2':
+        ['Gather access logs', 'Review permissions', 'Check compliance',
+         'Generate audit report', 'Present findings'],
+    'Incident Response Plan':
+        ['Draft procedures', 'Review with team', 'Simulation testing',
+         'Finalize documentation', 'Train staff'],
+    'Network Monitoring Setup':
+        ['Select monitoring tools', 'Deploy agents', 'Configure alerts',
+         'Test monitoring', 'Dashboard setup'],
+    'Vulnerability Assessment':
+        ['Scope definition', 'Run scans', 'Analyze results',
+         'Prioritize findings', 'Create remediation plan'],
+    'SIEM Implementation':
+        ['Requirements gathering', 'Install SIEM', 'Configure log sources',
+         'Create correlation rules', 'Dashboard creation'],
+    'Endpoint Protection':
+        ['Vendor evaluation', 'Deploy agents', 'Configure policies',
+         'Test detection', 'Monitor performance'],
 }
 
 activity_actions = [
@@ -148,10 +192,17 @@ def seed():
             user_id=admin.id,
             title='Security Analysis Session',
             messages=[
-                {'role': 'user', 'content': 'Check my system security', 'timestamp': (now - timedelta(hours=2)).isoformat()},
-                {'role': 'assistant', 'content': 'I have analyzed your system. All critical parameters are within normal ranges. I recommend reviewing your active firewall rules.', 'timestamp': (now - timedelta(hours=2)).isoformat()},
-                {'role': 'user', 'content': 'Any threats detected?', 'timestamp': (now - timedelta(hours=1)).isoformat()},
-                {'role': 'assistant', 'content': 'No active threats detected. Your intrusion detection system is functioning optimally. Would you like me to run a deep scan?', 'timestamp': (now - timedelta(hours=1)).isoformat()},
+                {'role': 'user', 'content': 'Check my system security',
+                 'timestamp': (now - timedelta(hours=2)).isoformat()},
+                {'role': 'assistant',
+                 'content': 'I have analyzed your system. All critical parameters are within '
+                 'normal ranges. I recommend reviewing your active firewall rules.',
+                 'timestamp': (now - timedelta(hours=2)).isoformat()},
+                {'role': 'user', 'content': 'Any threats detected?',
+                 'timestamp': (now - timedelta(hours=1)).isoformat()},
+                {'role': 'assistant', 'content': 'No active threats detected. Your intrusion detection system is '
+                 'functioning optimally. Would you like me to run a deep scan?',
+                 'timestamp': (now - timedelta(hours=1)).isoformat()},
             ],
         )
         db.session.add(conv)

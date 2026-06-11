@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required
 from database import db
-from models import User, Activity, SecurityEvent, Project, Task, AnalyticsEvent
+from models import User, Activity, SecurityEvent, Project, Task
 from datetime import datetime, timedelta, timezone
 
 dashboard_bp = Blueprint('dashboard', __name__, url_prefix='/api/dashboard')
@@ -10,12 +10,11 @@ dashboard_bp = Blueprint('dashboard', __name__, url_prefix='/api/dashboard')
 @dashboard_bp.route('/stats', methods=['GET'])
 @jwt_required()
 def get_stats():
-    user_id = get_jwt_identity()
     now = datetime.now(timezone.utc)
     today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
 
     total_users = db.session.query(User).count()
-    active_users = db.session.query(User).filter(User.is_active == True).count()
+    active_users = db.session.query(User).filter(User.is_active.is_(True)).count()
     total_projects = db.session.query(Project).count()
     active_projects = db.session.query(Project).filter(Project.status == 'active').count()
     total_tasks = db.session.query(Task).count()

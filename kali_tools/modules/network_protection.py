@@ -6,10 +6,9 @@ Real implementations using Kali Linux tools: nmap, scapy, iptables, aircrack-ng
 import os
 import ipaddress
 import socket
-import subprocess
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple, Any
+from typing import Dict, List, Any
 
 
 

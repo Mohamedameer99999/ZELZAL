@@ -3,12 +3,9 @@ ZELZAL Cloud Security Module v5.0
 Real tools: awscli, az, gcloud, prowler, scoutsuite, cloudsploit, s3scanner
 """
 
-import os
 import json
-import subprocess
-import platform
 from datetime import datetime
-from typing import Dict, List, Optional, Any
+from typing import Dict, Any
 
 from core import write_log, run_command, save_report, check_dependencies
 

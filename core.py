@@ -1,6 +1,13 @@
 # ZELZAL v4.5 - Anonymous Security Framework (Python Port)
 # Core Engine - mirrors Core.ps1
-import os, json, base64, hashlib, secrets, string, ctypes, subprocess
+import os
+import json
+import base64
+import hashlib
+import secrets
+import string
+import ctypes
+import subprocess
 from pathlib import Path
 from datetime import datetime
 from cryptography.fernet import Fernet
@@ -15,6 +22,7 @@ REPORTS_DIR = BASE_DIR / "Reports"
 for d in [LOG_DIR, CONFIG_DIR, QUARANTINE_DIR, REPORTS_DIR]:
     d.mkdir(exist_ok=True)
 
+
 def write_log(message, level="INFO"):
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     entry = f"[{ts}] [{level}] {message}"
@@ -23,20 +31,23 @@ def write_log(message, level="INFO"):
         f.write(entry + "\n")
     print(entry)
 
+
 def is_admin():
     try:
         return ctypes.windll.shell32.IsUserAnAdmin() != 0
-    except:
+    except Exception:
         return False
+
 
 def get_config(key, default=None):
     cfg_file = CONFIG_DIR / "settings.json"
     if cfg_file.exists():
         try:
             return json.loads(cfg_file.read_text()).get(key, default)
-        except:
+        except Exception:
             pass
     return default
+
 
 def set_config(key, value):
     cfg_file = CONFIG_DIR / "settings.json"
@@ -44,10 +55,11 @@ def set_config(key, value):
     if cfg_file.exists():
         try:
             cfg = json.loads(cfg_file.read_text())
-        except:
+        except Exception:
             cfg = {}
     cfg[key] = value
     cfg_file.write_text(json.dumps(cfg, indent=2))
+
 
 def generate_password(length=16, no_symbols=False):
     chars = string.ascii_letters + string.digits
@@ -55,8 +67,10 @@ def generate_password(length=16, no_symbols=False):
         chars += "!@#%^&*()_+-=[]{}|;:,.<>?"
     return "".join(secrets.choice(chars) for _ in range(length))
 
+
 def _fernet_key(password):
     return base64.urlsafe_b64encode(hashlib.sha256(password.encode()).digest())
+
 
 def encrypt_file(path, password):
     f = Fernet(_fernet_key(password))
@@ -68,6 +82,7 @@ def encrypt_file(path, password):
     write_log(f"Encrypted: {out_path}", "SUCCESS")
     return out_path
 
+
 def decrypt_file(path, password):
     f = Fernet(_fernet_key(password))
     with open(path, "rb") as fh:
@@ -77,6 +92,7 @@ def decrypt_file(path, password):
         fh.write(f.decrypt(data))
     write_log(f"Decrypted: {out_path}", "SUCCESS")
     return out_path
+
 
 def clear_old_logs(days=30):
     cutoff = datetime.now().timestamp() - days * 86400

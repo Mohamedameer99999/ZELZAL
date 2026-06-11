@@ -3,12 +3,9 @@ ZELZAL Wireless Security Module v5.0
 Real implementations using: aircrack-ng, iw, iwconfig, macchanger, wash, reaver
 """
 
-import os
 import re
-import json
-import subprocess
 from datetime import datetime
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Any
 
 from core import write_log, run_command, save_report, check_dependencies, is_root
 
@@ -75,7 +72,6 @@ class WirelessSecurity:
                 is_spoofed = 'Permanent' not in (out2 or '') and 'Current' in (out2 or '')
                 if is_spoofed:
                     curr = re.search(r'Current MAC:\s+(\S+)', out2)
-                    perm = re.search(r'Permanent MAC:\s+(\S+)', out2)
                     info["checks"].append({"check": "MAC Spoofing", "secure": True, "detail": f"Spoofed: {curr.group(1) if curr else ''}"})
                 else:
                     info["checks"].append({"check": "MAC Spoofing", "secure": False, "detail": "Using permanent MAC address"})
@@ -168,7 +164,6 @@ class WirelessSecurity:
             return result
 
         ssids = re.findall(r'SSID:\s*(.+)', out)
-        bssids_list = re.findall(r'BSS\s+(\S+)', out)
 
         ssid_counts = {}
         for ssid in ssids:

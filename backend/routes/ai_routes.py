@@ -1,18 +1,38 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from database import db
-from models import Conversation, Activity
+from models import Conversation
 from datetime import datetime, timezone
 
 ai_bp = Blueprint('ai', __name__, url_prefix='/api/ai')
 
 AI_RESPONSES = {
-    'security': 'I recommend enabling multi-factor authentication and reviewing your active sessions regularly. Would you like me to run a security audit?',
-    'performance': 'Your system performance is optimal. I suggest clearing cache and running a disk cleanup to maintain efficiency.',
-    'threat': 'I detected unusual patterns in your network traffic. Consider isolating affected systems and running a full vulnerability scan.',
-    'project': 'Based on your project timeline, I recommend prioritizing critical tasks with approaching deadlines. Shall I generate a sprint report?',
-    'analytics': 'User engagement has increased by 23% this week. Your security protocols are effectively maintaining trust.',
-    'default': 'I am monitoring your systems continuously. All security parameters are within normal ranges. How can I assist with your cybersecurity operations?',
+    'security': (
+        'I recommend enabling multi-factor authentication and '
+        'reviewing your active sessions regularly. '
+        'Would you like me to run a security audit?'
+    ),
+    'performance': (
+        'Your system performance is optimal. I suggest '
+        'clearing cache and running a disk cleanup to maintain efficiency.'
+    ),
+    'threat': (
+        'I detected unusual patterns in your network traffic. '
+        'Consider isolating affected systems and running a full vulnerability scan.'
+    ),
+    'project': (
+        'Based on your project timeline, I recommend prioritizing '
+        'critical tasks with approaching deadlines. Shall I generate a sprint report?'
+    ),
+    'analytics': (
+        'User engagement has increased by 23% this week. '
+        'Your security protocols are effectively maintaining trust.'
+    ),
+    'default': (
+        'I am monitoring your systems continuously. '
+        'All security parameters are within normal ranges. '
+        'How can I assist with your cybersecurity operations?'
+    ),
 }
 
 
@@ -55,8 +75,9 @@ def chat():
     else:
         response = AI_RESPONSES['default']
 
-    conversation.messages.append({'role': 'user', 'content': message, 'timestamp': datetime.now(timezone.utc).isoformat()})
-    conversation.messages.append({'role': 'assistant', 'content': response, 'timestamp': datetime.now(timezone.utc).isoformat()})
+    ts = datetime.now(timezone.utc).isoformat()
+    conversation.messages.append({'role': 'user', 'content': message, 'timestamp': ts})
+    conversation.messages.append({'role': 'assistant', 'content': response, 'timestamp': ts})
     conversation.updated_at = datetime.now(timezone.utc)
     db.session.commit()
 
@@ -107,9 +128,17 @@ def delete_conversation(conversation_id):
 @jwt_required()
 def get_recommendations():
     recommendations = [
-        {'type': 'security', 'title': 'Enable 2FA', 'description': 'Strengthen your account security with two-factor authentication', 'priority': 'high'},
-        {'type': 'performance', 'title': 'System Optimization', 'description': 'Run a full system diagnostic to identify potential bottlenecks', 'priority': 'medium'},
-        {'type': 'project', 'title': 'Review Project Timeline', 'description': '3 projects are approaching their deadlines', 'priority': 'high'},
-        {'type': 'analytics', 'title': 'Weekly Report Ready', 'description': 'Your weekly security analytics report is available for review', 'priority': 'low'},
+        {'type': 'security', 'title': 'Enable 2FA',
+         'description': 'Strengthen your account security with two-factor authentication',
+         'priority': 'high'},
+        {'type': 'performance', 'title': 'System Optimization',
+         'description': 'Run a full system diagnostic to identify potential bottlenecks',
+         'priority': 'medium'},
+        {'type': 'project', 'title': 'Review Project Timeline',
+         'description': '3 projects are approaching their deadlines',
+         'priority': 'high'},
+        {'type': 'analytics', 'title': 'Weekly Report Ready',
+         'description': 'Your weekly security analytics report is available for review',
+         'priority': 'low'},
     ]
     return jsonify({'recommendations': recommendations}), 200

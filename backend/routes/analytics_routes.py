@@ -90,7 +90,6 @@ def track_event():
 @jwt_required()
 def get_performance():
     now = datetime.now(timezone.utc)
-    week_ago = now - timedelta(days=7)
 
     return jsonify({
         'response_time_ms': 234,

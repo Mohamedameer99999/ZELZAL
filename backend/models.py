@@ -2,6 +2,7 @@ from database import db
 from datetime import datetime, timezone
 import uuid
 
+
 def gen_uuid():
     return str(uuid.uuid4())
 
@@ -17,7 +18,11 @@ class User(db.Model):
     avatar = db.Column(db.String(256), default='')
     bio = db.Column(db.Text, default='')
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
-    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
+    updated_at = db.Column(
+        db.DateTime,
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
+    )
     is_active = db.Column(db.Boolean, default=True)
 
     activities = db.relationship('Activity', backref='user', lazy=True, cascade='all, delete-orphan')
@@ -93,7 +98,11 @@ class Project(db.Model):
     priority = db.Column(db.String(16), default='medium')
     due_date = db.Column(db.DateTime, nullable=True)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
-    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
+    updated_at = db.Column(
+        db.DateTime,
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
+    )
 
     tasks = db.relationship('Task', backref='project', lazy=True, cascade='all, delete-orphan')
 
@@ -123,7 +132,11 @@ class Task(db.Model):
     status = db.Column(db.String(20), default='todo')
     assignee = db.Column(db.String(80), default='')
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
-    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
+    updated_at = db.Column(
+        db.DateTime,
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
+    )
 
     def to_dict(self):
         return {
@@ -146,7 +159,11 @@ class Conversation(db.Model):
     title = db.Column(db.String(128), default='New Chat')
     messages = db.Column(db.JSON, default=list)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
-    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
+    updated_at = db.Column(
+        db.DateTime,
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
+    )
 
     def to_dict(self):
         return {

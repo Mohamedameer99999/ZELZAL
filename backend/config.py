@@ -1,6 +1,7 @@
 import os
 from datetime import timedelta
 
+
 def _required_env(key: str, fallback: str = None) -> str:
     val = os.environ.get(key)
     if not val:
@@ -8,6 +9,7 @@ def _required_env(key: str, fallback: str = None) -> str:
             return fallback
         raise RuntimeError(f'{key} environment variable is required')
     return val
+
 
 class Config:
     SECRET_KEY = _required_env('SECRET_KEY', 'zelzal-dev-secret-key')

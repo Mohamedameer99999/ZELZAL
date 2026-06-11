@@ -3,11 +3,9 @@ ZELZAL Container Security Module v5.0
 Real implementations using: docker, kubectl, trivy, dockle, kube-bench
 """
 
-import os
 import json
-import subprocess
 from datetime import datetime
-from typing import Dict, List, Optional, Any
+from typing import Dict, Any
 
 from core import write_log, run_command, save_report, check_dependencies
 

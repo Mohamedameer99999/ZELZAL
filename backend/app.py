@@ -6,7 +6,7 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from database import init_db, create_tables
 from config import Config
-from auth import is_valid_email, sanitize_input, is_jti_blocklisted
+from auth import sanitize_input, is_jti_blocklisted
 
 import os
 
@@ -16,6 +16,7 @@ app.config.from_object(Config)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 jwt = JWTManager(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
+
 
 @jwt.token_in_blocklist_loader
 def check_if_token_revoked(jwt_header, jwt_payload):
@@ -33,17 +34,17 @@ limiter = Limiter(
 
 init_db(app)
 
-from models import User, Activity, SecurityEvent, Project, Task, Conversation, AnalyticsEvent
+from models import User, Activity, SecurityEvent, Project, Task, Conversation, AnalyticsEvent  # noqa: E402, F401
 
 create_tables(app)
 
-from routes.auth_routes import auth_bp
-from routes.dashboard_routes import dashboard_bp
-from routes.security_routes import security_bp
-from routes.ai_routes import ai_bp
-from routes.projects_routes import projects_bp
-from routes.analytics_routes import analytics_bp
-from routes.users_routes import users_bp
+from routes.auth_routes import auth_bp  # noqa: E402
+from routes.dashboard_routes import dashboard_bp  # noqa: E402
+from routes.security_routes import security_bp  # noqa: E402
+from routes.ai_routes import ai_bp  # noqa: E402
+from routes.projects_routes import projects_bp  # noqa: E402
+from routes.analytics_routes import analytics_bp  # noqa: E402
+from routes.users_routes import users_bp  # noqa: E402
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(dashboard_bp)
@@ -63,7 +64,12 @@ def add_security_headers(resp):
     resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate'
     resp.headers['Pragma'] = 'no-cache'
     resp.headers['Expires'] = '0'
-    resp.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' ws: wss:; img-src 'self' data:;"
+    resp.headers['Content-Security-Policy'] = (
+        "default-src 'self'; script-src 'self' 'unsafe-inline'; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+        "font-src 'self' https://fonts.gstatic.com; "
+        "connect-src 'self' ws: wss:; img-src 'self' data:;"
+    )
     resp.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
     resp.headers['Permissions-Policy'] = 'geolocation=(), microphone=(), camera=()'
     return resp

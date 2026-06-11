@@ -4,10 +4,8 @@ Real implementations using: iptables, nftables, ufw, ipset
 """
 
 import os
-import json
-import ipaddress
 from datetime import datetime
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Any
 
 from core import write_log, run_command, save_report, is_root, check_dependencies
 

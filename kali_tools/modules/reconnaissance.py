@@ -3,15 +3,13 @@ ZELZAL Reconnaissance Module v5.0
 Real tools: nmap stealth, masscan, enum4linux, smbmap, dnsrecon, dnsenum,
 fierce, sublist3r, amass, theharvester, recon-ng, sherlock, whatweb, wafw00f
 """
-import os
-import json
-import subprocess
 from datetime import datetime
-from typing import Dict, List, Optional, Any
+from typing import Dict, Any
 
-from core import write_log, run_command, save_report, check_dependencies, is_root
+from core import run_command, save_report, check_dependencies
 
 MODULE_NAME = "reconnaissance"
+
 
 class Reconnaissance:
     def __init__(self):
@@ -170,7 +168,6 @@ class Reconnaissance:
 
     def recon_ng_scan(self, domain: str = "example.com") -> Dict[str, Any]:
         result = {"module": "recon-ng", "domain": domain, "findings": []}
-        workspace = f"/tmp/reconng_zelzal_{datetime.now().strftime('%s')}"
         script = (
             f"workspaces create zelzal_scan\n"
             f"db insert domain {domain}\n"

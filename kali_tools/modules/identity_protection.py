@@ -5,11 +5,8 @@ Real implementations using: passwd, chage, openssl, keyring, python3-zxcvbn
 
 import os
 import re
-import json
-import hashlib
-import subprocess
 from datetime import datetime
-from typing import Dict, List, Optional, Any
+from typing import Dict, Optional, Any
 
 from core import write_log, run_command, save_report, is_root, check_dependencies
 

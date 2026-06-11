@@ -6,7 +6,7 @@ Real implementations using: psutil, systemd tools, disk utilities
 import os
 import shutil
 from datetime import datetime
-from typing import Dict, List, Optional, Any
+from typing import Dict, Any
 
 from core import write_log, run_command, save_report, check_dependencies
 
@@ -217,9 +217,9 @@ class PerformanceProtection:
                     code, stdout, _ = run_command(["du", "-sb", td])
                     if code == 0:
                         try:
-                            size = int(stdout.split()[0])
+                            int(stdout.split()[0])
                         except (ValueError, IndexError):
-                            size = 0
+                            pass
                     # Remove files older than 7 days
                     run_command(["find", td, "-type", "f", "-atime", "+7", "-delete"], timeout=30)
                     run_command(["find", td, "-type", "d", "-empty", "-delete"], timeout=30)

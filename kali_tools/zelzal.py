@@ -9,32 +9,24 @@ Usage:
     python3 zelzal.py --report # Generate full report
 """
 
-import os
 import sys
 import signal
-from datetime import datetime
-from typing import Optional
 
 try:
     from rich.console import Console
-    from rich.layout import Layout
-    from rich.panel import Panel
     from rich.table import Table
     from rich.text import Text
     from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn
     from rich.syntax import Syntax
     from rich.prompt import Prompt, Confirm
-    from rich.columns import Columns
-    from rich.live import Live
     from rich import box
-    from rich.markdown import Markdown
     HAS_RICH = True
 except ImportError:
     HAS_RICH = False
 
 from core import (
-    write_log, get_config, set_config, generate_password,
-    is_root, is_kali, get_system_info, check_dependencies,
+    generate_password,
+    is_root, is_kali, get_system_info,
     save_report, encrypt_file, decrypt_file, clear_old_logs,
     VERSION,
 )
