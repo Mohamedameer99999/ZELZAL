@@ -1,12 +1,9 @@
 services:
   - type: web
     name: zelzal
-    env: python
-    buildCommand: |
-      pip install -r backend/requirements.txt
-      cd frontend && npm install && npm run build
-    startCommand: cd backend && python app.py
-    healthCheckPath: /api/auth/me
+    env: docker
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/auth/login
     envVars:
       - key: SECRET_KEY
         generateValue: true

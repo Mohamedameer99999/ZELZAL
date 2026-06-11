@@ -1,0 +1,13 @@
+__pycache__
+*.pyc
+*.pyo
+.env
+.git
+.gitignore
+node_modules
+frontend/node_modules
+frontend/src
+frontend/public
+kali_tools/reports
+*.zip
+*.md
