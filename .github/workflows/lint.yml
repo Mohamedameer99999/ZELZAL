@@ -1,0 +1,45 @@
+name: Lint & Test
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install -r backend/requirements.txt
+          pip install flake8 pytest
+
+      - name: Lint with flake8
+        run: flake8 backend/ --max-line-length=120 --exclude=__pycache__
+
+      - name: Test import
+        run: python -c "from app import app; print('Backend OK')"
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install & lint
+        run: |
+          cd frontend
+          npm ci
+          npm run build
